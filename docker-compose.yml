@@ -12,7 +12,10 @@ services:
     container_name: mhp-mailhog
     image: mailhog/mailhog:latest
     restart: always
-    command: -invite-jim -jim-accept=0.5 -jim-disconnect=0 -jim-linkspeed-affect=0 -jim-reject-sender=0 -jim-reject-recipient=0 -jim-reject-auth=0
+    command: -invite-jim -jim-accept=0.25 -jim-disconnect=0 -jim-linkspeed-affect=0 -jim-reject-sender=0 -jim-reject-recipient=0 -jim-reject-auth=0
     ports:
       - 1025:1025
       - 8025:8025
+
+
+

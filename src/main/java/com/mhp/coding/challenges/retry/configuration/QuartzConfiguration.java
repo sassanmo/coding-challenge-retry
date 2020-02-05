@@ -19,12 +19,22 @@ public class QuartzConfiguration {
 	@Autowired
 	private RetryJobFactory retryJobFactory;
 	
+	/**
+	 * Creates a Job factory with the given application context in order
+	 * to be able to inject dependencies in serialized Jobs
+	 * @return
+	 */
 	@Bean
     public SpringBeanJobFactory springBeanJobFactory() {
 		retryJobFactory.setApplicationContext(applicationContext);
         return retryJobFactory;
     }
 	
+	/**
+	 * Creates a factory bean which configures a quartz scheduler.
+	 * The configurations of the scheduler are loaded form the quartz.properties file.
+	 * @return factory bean with a configured scheduler.
+	 */
 	@Bean
 	 public SchedulerFactoryBean schedulerFactoryBean() {
 	  SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
