@@ -69,7 +69,7 @@ public class RetryService {
 	 * @param retryAttempt actual retry attempt to send the mail.
 	 */
 	public void handleSendFailure(@Valid @NotNull EmailNotification emailNotification, int retryAttempt) {
-		if (retryAttempt < RetryService.MAX_RETRY_ATTEMPTS) {
+		if (retryAttempt <= RetryService.MAX_RETRY_ATTEMPTS) {
 			createRetryJob(emailNotification, retryAttempt);
 		} else {
 			// Retry attempts are exceeded here. Further handling comes here.

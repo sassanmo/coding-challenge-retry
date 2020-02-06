@@ -10,12 +10,15 @@ import org.springframework.stereotype.Component;
 import com.mhp.coding.challenges.retry.core.entities.EmailNotification;
 import com.mhp.coding.challenges.retry.core.outbound.NotificationSender;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * QuartzJobBean implementing the execution of a retry job.
  * 
  * @author Matteo Sassano
  *
  */
+@Slf4j
 @Component
 public class RetryJob extends QuartzJobBean {
 	
@@ -58,6 +61,9 @@ public class RetryJob extends QuartzJobBean {
         String subject = jobDataMap.getString(SUBJECT_KEY);
         String text = jobDataMap.getString(TEXT_KEY);
         int retryAttempts = jobDataMap.getIntValue(AMOUNT_RETRIES_KEY);
+        
+        log.info("Executing job " + context.getJobDetail().getKey().getName() + ". Retry attempt #" + retryAttempts);
+        
         EmailNotification emailNotification = new EmailNotification();
         emailNotification.setRecipient(recipient);
         emailNotification.setSubject(subject);
