@@ -1,5 +1,8 @@
 package com.mhp.coding.challenges.retry.core.logic;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -46,6 +49,32 @@ public class RetryService {
 	
 	@Autowired
 	private RetryJobTriggerFactory retryJobTriggerFactory;
+
+	/**
+	 * Handles a mail sending failure at the first time.
+	 * 
+	 * @param emailNotification object holding the email contents to be sent.
+	 */
+	public void handleSendFailure(@Valid @NotNull EmailNotification emailNotification) {
+		createRetryJob(emailNotification);
+	}
+
+	/**
+	 * Handles a mail sending failure.
+	 * 
+	 * If the max retry attempts are exceeded the email notification object is persisted in the database.
+	 * (Was not required, but maybe util in future in order to retry in a later point of time)
+	 * 
+	 * @param emailNotification object holding the email contents to be sent.
+	 * @param retryAttempt actual retry attempt to send the mail.
+	 */
+	public void handleSendFailure(@Valid @NotNull EmailNotification emailNotification, int retryAttempt) {
+		if (retryAttempt < RetryService.MAX_RETRY_ATTEMPTS) {
+			createRetryJob(emailNotification, retryAttempt);
+		} else {
+			// Retry attempts are exceeded here. Further handling comes here.
+		}
+	}
 	
 	/**
 	 * Creates the initial retry job in the case a mail couldn't be delivered

@@ -62,9 +62,7 @@ public class EmailNotificationSenderService implements NotificationSender {
             SimpleMailMessage mailMessage = createSimpleMailMessage(emailNotification);
             mailSender.send(mailMessage);
         } catch (Exception e) {
-        	if (retryAttempt < RetryService.MAX_RETRY_ATTEMPTS) {
-        		retryService.createRetryJob(emailNotification, retryAttempt + 1);
-        	}
+        	retryService.handleSendFailure(emailNotification, retryAttempt + 1);
         }
     }
     

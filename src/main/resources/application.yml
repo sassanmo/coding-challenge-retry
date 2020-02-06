@@ -13,4 +13,3 @@ spring:
             required: false
 server:
   port : 8080
-

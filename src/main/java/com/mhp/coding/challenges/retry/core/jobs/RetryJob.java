@@ -1,6 +1,5 @@
 package com.mhp.coding.challenges.retry.core.jobs;
 
-import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -18,7 +17,6 @@ import com.mhp.coding.challenges.retry.core.outbound.NotificationSender;
  *
  */
 @Component
-@DisallowConcurrentExecution
 public class RetryJob extends QuartzJobBean {
 	
 	/**
